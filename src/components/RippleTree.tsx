@@ -5,42 +5,19 @@ import type { NewsItem, Ripple } from '@/lib/types';
 
 function RippleNode({ ripple }: { ripple: Ripple }) {
   const isUp = ripple.direction === 'up';
-  const severityColors = {
-    high: isUp ? 'border-green-500 bg-green-500/10' : 'border-red-500 bg-red-500/10',
-    medium: isUp ? 'border-green-400 bg-green-400/5' : 'border-red-400 bg-red-400/5',
-    low: isUp ? 'border-green-300 bg-green-300/5' : 'border-red-300 bg-red-300/5',
-  };
 
   return (
-    <div className={`border-l-4 ${severityColors[ripple.severity]} rounded-r-lg p-3 ml-6`}>
-      <div className="flex items-center gap-2 mb-1">
-        <span className="text-lg">{isUp ? '📈' : '📉'}</span>
-        <span className="font-semibold text-white">{ripple.player}</span>
-        <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
-          {ripple.team} {ripple.position}
-        </span>
-        <span className={`text-xs px-2 py-0.5 rounded-full ${
-          ripple.severity === 'high' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-slate-700 text-slate-400'
-        }`}>
-          {ripple.severity}
-        </span>
+    <div className={`border-l-4 ${isUp ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} rounded-r-lg p-3 ml-6`}>
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="text-base">{isUp ? '📈' : '📉'}</span>
+        <span className="font-semibold text-gray-900">{ripple.player}</span>
+        <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">{ripple.team} {ripple.position}</span>
+        {ripple.severity === 'high' && <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">high impact</span>}
       </div>
-
-      <div className="space-y-1 text-sm ml-8">
-        <div className="flex gap-2">
-          <span className="text-slate-500 font-medium shrink-0">Cause:</span>
-          <span className="text-slate-300">{ripple.cause}</span>
-        </div>
-        <div className="flex gap-2">
-          <span className="text-slate-500 font-medium shrink-0">Impact:</span>
-          <span className="text-slate-300">{ripple.impact}</span>
-        </div>
-        <div className="flex gap-2">
-          <span className="text-slate-500 font-medium shrink-0">Draft shift:</span>
-          <span className={`font-medium ${isUp ? 'text-green-400' : 'text-red-400'}`}>
-            {ripple.draftValueShift}
-          </span>
-        </div>
+      <div className="space-y-1 text-sm ml-7">
+        <div><span className="text-gray-500 font-medium">Cause: </span><span className="text-gray-800">{ripple.cause}</span></div>
+        <div><span className="text-gray-500 font-medium">Impact: </span><span className="text-gray-800">{ripple.impact}</span></div>
+        <div><span className="text-gray-500 font-medium">Draft shift: </span><span className={`font-semibold ${isUp ? 'text-green-700' : 'text-red-700'}`}>{ripple.draftValueShift}</span></div>
       </div>
     </div>
   );
@@ -48,108 +25,62 @@ function RippleNode({ ripple }: { ripple: Ripple }) {
 
 export default function RippleTree({ item }: { item: NewsItem }) {
   const [expanded, setExpanded] = useState(false);
-
   const fromRipples = item.ripples.filter(r => r.affectedSide === 'from');
   const toRipples = item.ripples.filter(r => r.affectedSide === 'to');
   const upCount = item.ripples.filter(r => r.direction === 'up').length;
   const downCount = item.ripples.filter(r => r.direction === 'down').length;
 
-  const typeColors: Record<string, string> = {
-    Trade: 'bg-purple-500/20 text-purple-400',
-    Signing: 'bg-blue-500/20 text-blue-400',
-    Injury: 'bg-red-500/20 text-red-400',
-    Draft: 'bg-yellow-500/20 text-yellow-400',
-    Release: 'bg-orange-500/20 text-orange-400',
-    Retirement: 'bg-slate-500/20 text-slate-400',
-    Contract: 'bg-green-500/20 text-green-400',
-    'Trade Talks': 'bg-purple-500/20 text-purple-300',
-    'Team Impact': 'bg-cyan-500/20 text-cyan-400',
+  const typeBadge: Record<string, string> = {
+    Trade: 'bg-purple-100 text-purple-700',
+    Signing: 'bg-blue-100 text-blue-700',
+    Injury: 'bg-red-100 text-red-700',
+    Draft: 'bg-amber-100 text-amber-700',
+    Release: 'bg-orange-100 text-orange-700',
+    Award: 'bg-green-100 text-green-700',
+    'Trade Talks': 'bg-purple-100 text-purple-600',
   };
 
   return (
-    <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-      {/* Header — always visible */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full p-4 text-left hover:bg-slate-700/30 transition-colors"
-      >
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <button onClick={() => setExpanded(!expanded)} className="w-full p-4 text-left hover:bg-gray-50 transition-colors">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                typeColors[item.type] || 'bg-slate-700 text-slate-300'
-              }`}>
-                {item.type}
-              </span>
-              <span className="text-xs text-slate-500">{item.date}</span>
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeBadge[item.type] || 'bg-gray-100 text-gray-600'}`}>{item.type}</span>
+              <span className="text-xs text-gray-400">{item.date}</span>
             </div>
-            <h3 className="text-white font-semibold">{item.headline}</h3>
-            <p className="text-slate-400 text-sm mt-1">{item.details}</p>
+            <h3 className="text-gray-900 font-semibold">{item.headline}</h3>
+            <p className="text-gray-600 text-sm mt-1">{item.details}</p>
           </div>
-
           <div className="flex items-center gap-3 ml-4 shrink-0">
-            {upCount > 0 && (
-              <span className="flex items-center gap-1 text-green-400 text-sm">
-                <span>📈</span> {upCount}
-              </span>
-            )}
-            {downCount > 0 && (
-              <span className="flex items-center gap-1 text-red-400 text-sm">
-                <span>📉</span> {downCount}
-              </span>
-            )}
-            <span className="text-slate-500 text-lg">{expanded ? '▼' : '▶'}</span>
+            {upCount > 0 && <span className="flex items-center gap-1 text-green-600 text-sm font-medium">📈 {upCount}</span>}
+            {downCount > 0 && <span className="flex items-center gap-1 text-red-600 text-sm font-medium">📉 {downCount}</span>}
+            <span className="text-gray-400">{expanded ? '▼' : '▶'}</span>
           </div>
         </div>
       </button>
 
-      {/* Ripple Tree — expanded view */}
       {expanded && item.ripples.length > 0 && (
-        <div className="border-t border-slate-700 p-4 space-y-4">
-          {/* FROM side (team losing the player) */}
+        <div className="border-t border-gray-200 p-4 bg-gray-50 space-y-4">
           {fromRipples.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
-                <span className="text-sm font-medium text-orange-400">
-                  CAUSE: {item.player} leaves {item.fromTeam}
-                </span>
+                <div className="w-2.5 h-2.5 rounded-full bg-orange-500"></div>
+                <span className="text-sm font-semibold text-orange-700">CAUSE: {item.player} leaves {item.fromTeam}</span>
               </div>
-              <div className="space-y-2">
-                {fromRipples.map((ripple, i) => (
-                  <RippleNode key={`from-${i}`} ripple={ripple} />
-                ))}
-              </div>
+              <div className="space-y-2">{fromRipples.map((r, i) => <RippleNode key={`f-${i}`} ripple={r} />)}</div>
             </div>
           )}
-
-          {/* TO side (team gaining the player) */}
           {toRipples.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                <span className="text-sm font-medium text-blue-400">
-                  CAUSE: {item.player} joins {item.toTeam}
-                </span>
+                <div className="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                <span className="text-sm font-semibold text-blue-700">CAUSE: {item.player} joins {item.toTeam}</span>
               </div>
-              <div className="space-y-2">
-                {toRipples.map((ripple, i) => (
-                  <RippleNode key={`to-${i}`} ripple={ripple} />
-                ))}
-              </div>
+              <div className="space-y-2">{toRipples.map((r, i) => <RippleNode key={`t-${i}`} ripple={r} />)}</div>
             </div>
           )}
-
-          {/* Source */}
-          {item.source && (
-            <div className="text-xs text-slate-500 pt-2 border-t border-slate-700/50">
-              Source: {item.sourceUrl ? (
-                <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-                  {item.source}
-                </a>
-              ) : item.source}
-            </div>
-          )}
+          {item.source && <div className="text-xs text-gray-400 pt-2 border-t border-gray-200">Source: {item.source}</div>}
         </div>
       )}
     </div>

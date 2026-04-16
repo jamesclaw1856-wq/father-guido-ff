@@ -1,19 +1,11 @@
-import { getDb } from '@/lib/firebase-admin';
+'use client';
+
+import playersData from '@/data/players.json';
 import type { PlayerData } from '@/lib/types';
 import PlayerTable from './PlayerTable';
 
-async function getPlayers(): Promise<PlayerData[]> {
-  try {
-    const db = getDb();
-    const snapshot = await db.collection('players').orderBy('name').get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as PlayerData[];
-  } catch {
-    return [];
-  }
-}
-
-export default async function PlayersPage() {
-  const players = await getPlayers();
+export default function PlayersPage() {
+  const players = playersData as PlayerData[];
 
   return (
     <div className="space-y-6">
