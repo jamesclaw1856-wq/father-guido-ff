@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Father Guido Fantasy Football
 
-## Getting Started
+Private fantasy-football command center built with Next.js, React, TypeScript, and Firebase Admin/Firestore.
 
-First, run the development server:
+## What the app includes
+
+- Password-protected dashboard
+- News + ripple effects workflow
+- Player database
+- 3-year analysis page
+- Draft board
+- NFL team recommendations
+
+## Local development
+
+1. Install dependencies
+
+```bash
+npm ci
+```
+
+2. Configure local environment
+
+```bash
+cp .env.local.example .env.local
+```
+
+3. Add Firebase Admin credentials using one of these options
+
+Option A (simplest locally):
+- Download a Firebase service account JSON file
+- Save it as:
+  `firebase-credentials.json`
+
+Option B:
+- Put the full JSON into `FIREBASE_CREDENTIALS` inside `.env.local`
+
+Notes:
+- `.env.local` is loaded from the project root
+- `firebase-credentials.json` is gitignored and should never be committed
+- Data-backed pages will show clear setup warnings until credentials are present
+
+4. Start the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+By default, the app uses:
 
-## Learn More
+```txt
+fatherguido2026
+```
 
-To learn more about Next.js, take a look at the following resources:
+You can override it locally with `APP_PASSWORD` in `.env.local`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Firebase settings used by the app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `APP_PASSWORD`
+- `FIREBASE_PROJECT_ID`
+- `FIREBASE_CREDENTIALS`
+- fallback local file: `firebase-credentials.json`
 
-## Deploy on Vercel
+## Current local behavior without Firebase credentials
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Without Firebase Admin credentials:
+- Dashboard shell still renders
+- Analysis, Draft Board, and Teams pages still render
+- Player and News pages show explicit setup warnings
+- News update API returns an error until Firebase is configured

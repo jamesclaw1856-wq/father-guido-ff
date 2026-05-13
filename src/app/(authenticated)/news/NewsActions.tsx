@@ -17,7 +17,7 @@ export default function NewsActions() {
       const data = await res.json();
 
       if (res.ok) {
-        setStatus(`Added ${data.count} news items with ripple analysis`);
+        setStatus(data.message || `Added ${data.count} news items with ripple analysis`);
         router.refresh();
       } else {
         setStatus(`Error: ${data.error}`);

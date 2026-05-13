@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getDb } from '@/lib/firebase-admin';
+import FirebaseConfigNotice from '@/components/FirebaseConfigNotice';
+import { getDb, getFirebaseConfigurationError } from '@/lib/firebase-admin';
 
 async function getRecentNews() {
   try {
@@ -8,17 +9,27 @@ async function getRecentNews() {
       .orderBy('date', 'desc')
       .limit(5)
       .get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch {
-    return [];
+    return {
+      items: snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+      error: null,
+    };
+  } catch (error) {
+    return {
+      items: [],
+      error: error instanceof Error ? error.message : 'Failed to load recent news.',
+    };
   }
 }
 
 export default async function Dashboard() {
-  const recentNews = await getRecentNews();
+  const { items: recentNews, error } = await getRecentNews();
+  const configurationError = getFirebaseConfigurationError();
 
   return (
     <div className="space-y-6">
+      {error && (
+        <FirebaseConfigNotice message={configurationError ?? error} />
+      )}
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -149,6 +160,8 @@ export default async function Dashboard() {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <p className="text-slate-500 text-sm">Recent news is unavailable until Firebase Admin credentials are configured.</p>
         ) : (
           <p className="text-slate-500 text-sm">No news yet. Click &quot;Run News Update&quot; on the News page to get started.</p>
         )}
