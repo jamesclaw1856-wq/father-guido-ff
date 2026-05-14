@@ -3,30 +3,28 @@
 import { useState, useMemo } from 'react';
 import type { PlayerData } from '@/lib/types';
 
+type SortKey = 'name' | 'y2023' | 'y2024' | 'y2025';
+
 export default function PlayerTable({ players }: { players: PlayerData[] }) {
   const [search, setSearch] = useState('');
   const [posFilter, setPosFilter] = useState('ALL');
   const [targetFilter, setTargetFilter] = useState('ALL');
-  const [sortBy, setSortBy] = useState<string>('name');
+  const [sortBy, setSortBy] = useState<SortKey>('name');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
 
   const filtered = useMemo(() => {
-    let result = players.filter(p => {
-      if (search && !p.name.toLowerCase().includes(search.toLowerCase()) &&
-          !p.team.toLowerCase().includes(search.toLowerCase())) return false;
+    const result = players.filter((p) => {
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase()) && !p.team.toLowerCase().includes(search.toLowerCase())) return false;
       if (posFilter !== 'ALL' && p.position !== posFilter) return false;
       if (targetFilter !== 'ALL' && p.draftTarget !== targetFilter) return false;
       return true;
     });
 
     result.sort((a, b) => {
-      let aVal: any, bVal: any;
-      if (sortBy === 'name') { aVal = a.name; bVal = b.name; }
-      else if (sortBy === 'y2025') { aVal = a.actual.y2025 || 0; bVal = b.actual.y2025 || 0; }
-      else if (sortBy === 'y2024') { aVal = a.actual.y2024 || 0; bVal = b.actual.y2024 || 0; }
-      else if (sortBy === 'y2023') { aVal = a.actual.y2023 || 0; bVal = b.actual.y2023 || 0; }
-      else { aVal = a.name; bVal = b.name; }
+      const aVal = sortBy === 'name' ? a.name : a.actual[sortBy] || 0;
+      const bVal = sortBy === 'name' ? b.name : b.actual[sortBy] || 0;
 
+      if (aVal === bVal) return 0;
       if (sortDir === 'asc') return aVal > bVal ? 1 : -1;
       return aVal < bVal ? 1 : -1;
     });
@@ -34,8 +32,8 @@ export default function PlayerTable({ players }: { players: PlayerData[] }) {
     return result;
   }, [players, search, posFilter, targetFilter, sortBy, sortDir]);
 
-  const toggleSort = (col: string) => {
-    if (sortBy === col) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
+  const toggleSort = (col: SortKey) => {
+    if (sortBy === col) setSortDir((d) => d === 'asc' ? 'desc' : 'asc');
     else { setSortBy(col); setSortDir('desc'); }
   };
 
@@ -48,16 +46,15 @@ export default function PlayerTable({ players }: { players: PlayerData[] }) {
 
   return (
     <div className="space-y-4">
-      {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <input
           type="text"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Search player or team..."
           className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
         />
-        <select value={posFilter} onChange={e => setPosFilter(e.target.value)}
+        <select value={posFilter} onChange={(e) => setPosFilter(e.target.value)}
           className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white">
           <option value="ALL">All Positions</option>
           <option value="QB">QB</option>
@@ -65,7 +62,7 @@ export default function PlayerTable({ players }: { players: PlayerData[] }) {
           <option value="WR">WR</option>
           <option value="K">K</option>
         </select>
-        <select value={targetFilter} onChange={e => setTargetFilter(e.target.value)}
+        <select value={targetFilter} onChange={(e) => setTargetFilter(e.target.value)}
           className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white">
           <option value="ALL">All Targets</option>
           <option value="must-get">Must-Get</option>
@@ -76,7 +73,6 @@ export default function PlayerTable({ players }: { players: PlayerData[] }) {
         <span className="text-sm text-slate-500 self-center">{filtered.length} players</span>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto bg-slate-800/50 border border-slate-700 rounded-xl">
         <table className="w-full text-sm">
           <thead>

@@ -22,7 +22,7 @@ export default function NewsActions() {
       } else {
         setStatus(`Error: ${data.error}`);
       }
-    } catch (err) {
+    } catch {
       setStatus('Failed to run news update');
     } finally {
       setLoading(false);
