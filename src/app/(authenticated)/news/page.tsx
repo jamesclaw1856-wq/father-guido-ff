@@ -1,26 +1,34 @@
-import { getDb } from '@/lib/firebase-admin';
+import FirebaseConfigNotice from '@/components/FirebaseConfigNotice';
+import { getDb, getFirebaseConfigurationError } from '@/lib/firebase-admin';
 import type { NewsItem } from '@/lib/types';
 import RippleTree from '@/components/RippleTree';
 import NewsActions from './NewsActions';
 
-async function getNews(): Promise<NewsItem[]> {
+async function getNews(): Promise<{ news: NewsItem[]; error: string | null }> {
   try {
     const db = getDb();
     const snapshot = await db.collection('news')
       .orderBy('date', 'desc')
       .limit(50)
       .get();
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as NewsItem[];
-  } catch {
-    return [];
+    return {
+      news: snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as NewsItem[],
+      error: null,
+    };
+  } catch (error) {
+    return {
+      news: [],
+      error: error instanceof Error ? error.message : 'Failed to load news data.',
+    };
   }
 }
 
 export default async function NewsPage() {
-  const news = await getNews();
+  const { news, error } = await getNews();
+  const configurationError = getFirebaseConfigurationError();
 
   // Group by date
   const grouped = news.reduce((acc: Record<string, NewsItem[]>, item) => {
@@ -32,6 +40,10 @@ export default async function NewsPage() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <FirebaseConfigNotice message={configurationError ?? error} />
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">News & Ripple Effects</h1>
@@ -65,6 +77,14 @@ export default async function NewsPage() {
             </div>
           </div>
         ))
+      ) : error ? (
+        <div className="text-center py-16">
+          <div className="text-5xl mb-4">🧯</div>
+          <h3 className="text-xl font-semibold text-slate-300">News feed unavailable</h3>
+          <p className="text-slate-500 mt-2 max-w-2xl mx-auto">
+            Firebase Admin is not configured, so the app cannot read or write the news collection yet.
+          </p>
+        </div>
       ) : (
         <div className="text-center py-16">
           <div className="text-5xl mb-4">📰</div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const admin = require('firebase-admin');
 const path = require('path');
 
@@ -251,6 +252,26 @@ async function seed() {
     ],
   });
   console.log('✓ Seeded draft strategy');
+
+  // --- NFL TEAMS ---
+  const nflTeams = [
+    { abbreviation: 'ARI', name: 'Arizona Cardinals', division: 'NFC West', conference: 'NFC', qb1: 'Kyler Murray → MIN', rb1: 'James Conner', wr1: 'Marvin Harrison Jr', kicker: 'Chad Ryland', outlook: 'Rebuild — lost Murray', pickType: 'LOSE', notes: 'QB downgrade, McBride value drops' },
+    { abbreviation: 'BAL', name: 'Baltimore Ravens', division: 'AFC North', conference: 'AFC', qb1: 'Lamar Jackson', rb1: 'Derrick Henry', wr1: 'Zay Flowers', kicker: 'Justin Tucker', outlook: 'Elite + Hendrickson signing', pickType: 'WIN', notes: 'Added Trey Hendrickson (4yr/$112M)' },
+    { abbreviation: 'BUF', name: 'Buffalo Bills', division: 'AFC East', conference: 'AFC', qb1: 'Josh Allen', rb1: 'James Cook', wr1: 'Khalil Shakir', kicker: 'Tyler Bass', outlook: 'Elite offense', pickType: 'WIN', notes: 'Added Bradley Chubb (3yr/$43.5M)' },
+    { abbreviation: 'DET', name: 'Detroit Lions', division: 'NFC North', conference: 'NFC', qb1: 'Jared Goff', rb1: 'Jahmyr Gibbs', wr1: 'Amon-Ra St. Brown', kicker: 'Jake Bates', outlook: 'Dominant offense', pickType: 'WIN', notes: 'Goff: 356→523→415' },
+    { abbreviation: 'LV', name: 'Las Vegas Raiders', division: 'AFC West', conference: 'AFC', qb1: 'Fernando Mendoza (draft)', rb1: 'Ashton Jeanty', wr1: 'TBD', kicker: 'Daniel Carlson', outlook: 'Rebuilding + rookie QB', pickType: 'Situational', notes: '#1 pick Mendoza. Cousins as backup.' },
+    { abbreviation: 'LAR', name: 'Los Angeles Rams', division: 'NFC West', conference: 'NFC', qb1: 'Matthew Stafford', rb1: 'Kyren Williams', wr1: 'Puka Nacua', kicker: 'Joshua Karty', outlook: 'Elite offense — Stafford MVP', pickType: 'WIN', notes: 'Stafford confirmed for 2026' },
+    { abbreviation: 'MIN', name: 'Minnesota Vikings', division: 'NFC North', conference: 'NFC', qb1: 'Kyler Murray / J.J. McCarthy', rb1: 'Aaron Jones', wr1: 'Justin Jefferson', kicker: 'Will Reichard', outlook: 'Improved with Murray', pickType: 'WIN', notes: 'Murray signed. Reichard is All-Pro.' },
+    { abbreviation: 'NE', name: 'New England Patriots', division: 'AFC East', conference: 'AFC', qb1: 'Drake Maye', rb1: 'Rhamondre Stevenson', wr1: 'Romeo Doubs (new)', kicker: 'Andres Borregales', outlook: 'Improving — Maye MVP runner-up', pickType: 'Situational', notes: 'Added Doubs, Dre\'Mont Jones' },
+    { abbreviation: 'NYG', name: 'New York Giants', division: 'NFC East', conference: 'NFC', qb1: 'TBD', rb1: 'Tyrone Tracy', wr1: 'Malik Nabers', kicker: 'Graham Gano', outlook: 'Weak — Dexter Lawrence trade talks', pickType: 'LOSE', notes: 'Defense collapsing if Lawrence leaves' },
+    { abbreviation: 'PHI', name: 'Philadelphia Eagles', division: 'NFC East', conference: 'NFC', qb1: 'Jalen Hurts', rb1: 'Saquon Barkley', wr1: 'A.J. Brown', kicker: 'Jake Elliott', outlook: 'Strong offense', pickType: 'WIN', notes: 'Added WR Dontayvion Wicks' },
+    { abbreviation: 'WAS', name: 'Washington Commanders', division: 'NFC East', conference: 'NFC', qb1: 'Jayden Daniels', rb1: 'Brian Robinson', wr1: 'Terry McLaurin', kicker: 'Austin Seibert', outlook: 'Strong — Father Guido tradition', pickType: 'WIN', notes: '3-year consistent team pick value' },
+  ];
+
+  for (const team of nflTeams) {
+    await db.collection('nflTeams').doc(team.abbreviation).set(team);
+  }
+  console.log(`✓ Seeded ${nflTeams.length} NFL teams`);
 
   // --- PLAYERS (key players with 3-year data) ---
   const players = [

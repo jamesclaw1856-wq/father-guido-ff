@@ -17,7 +17,7 @@ export async function POST() {
       return NextResponse.json({
         success: true,
         count: existing.size,
-        message: `Already have ${existing.size} news items for today. News is refreshed daily by the automated scheduler, or you can trigger it via Claude Code.`
+        message: `Already have ${existing.size} news items for today. News is refreshed daily by the automated scheduler, or you can trigger it via Claude Code.`,
       });
     }
 
@@ -25,12 +25,14 @@ export async function POST() {
     return NextResponse.json({
       success: true,
       count: 0,
-      message: 'No new news available. The daily news scheduler runs at 7 AM, or ask Claude directly: "run today\'s news update and push to the app"'
+      message: 'No new news available. The daily news scheduler runs at 7 AM, or ask Claude directly: "run today\'s news update and push to the app"',
     });
-
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to load news.',
+      },
       { status: 500 }
     );
   }

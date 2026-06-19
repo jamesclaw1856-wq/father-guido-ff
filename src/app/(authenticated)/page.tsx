@@ -1,31 +1,52 @@
 import Link from 'next/link';
-import { getDb } from '@/lib/firebase-admin';
+import FirebaseConfigNotice from '@/components/FirebaseConfigNotice';
+import { getDb, getFirebaseConfigurationError } from '@/lib/firebase-admin';
 
-async function getRecentNews() {
+type RecentNewsItem = {
+  id: string;
+  type: string;
+  headline: string;
+  date: string;
+};
+
+async function getRecentNews(): Promise<{ items: RecentNewsItem[]; error: string | null }> {
   try {
     const db = getDb();
     const snapshot = await db.collection('news')
       .orderBy('date', 'desc')
       .limit(5)
       .get();
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch {
-    return [];
+    return {
+      items: snapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: String(doc.data().type ?? ''),
+        headline: String(doc.data().headline ?? ''),
+        date: String(doc.data().date ?? ''),
+      })),
+      error: null,
+    };
+  } catch (error) {
+    return {
+      items: [],
+      error: error instanceof Error ? error.message : 'Failed to load recent news.',
+    };
   }
 }
 
 export default async function Dashboard() {
-  const recentNews = await getRecentNews();
+  const { items: recentNews, error } = await getRecentNews();
+  const configurationError = getFirebaseConfigurationError();
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {error && (
+        <FirebaseConfigNotice message={configurationError ?? error} />
+      )}
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <p className="text-slate-400 mt-1">Las Vegas Fantasy Football | Father Guido</p>
       </div>
 
-      {/* Key Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 border border-yellow-500/30 rounded-xl p-4">
           <div className="text-yellow-400 text-sm font-medium">2026 Draft Position</div>
@@ -52,7 +73,6 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Key Insights */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">🔑 Key Insights (3-Year Analysis)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -87,7 +107,6 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/news" className="bg-blue-600/20 border border-blue-500/30 rounded-xl p-4 hover:bg-blue-600/30 transition-colors group">
           <div className="text-blue-400 font-medium group-hover:text-blue-300">📰 News & Ripple Effects</div>
@@ -103,7 +122,6 @@ export default async function Dashboard() {
         </Link>
       </div>
 
-      {/* Championship Blueprint */}
       <div className="bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-3">🏆 Championship Draft Blueprint (Proven by 3 Years of Data)</h2>
         <div className="overflow-x-auto">
@@ -117,7 +135,7 @@ export default async function Dashboard() {
               </tr>
             </thead>
             <tbody className="text-slate-300">
-              <tr className="border-b border-slate-800"><td className="py-2 pr-4">1-2</td><td className="pr-4">9, 12</td><td className="pr-4 font-medium">Best skill (RB/WR)</td><td className="text-slate-500">Fill roster slots — don't reach for QB</td></tr>
+              <tr className="border-b border-slate-800"><td className="py-2 pr-4">1-2</td><td className="pr-4">9, 12</td><td className="pr-4 font-medium">Best skill (RB/WR)</td><td className="text-slate-500">Fill roster slots — don&apos;t reach for QB</td></tr>
               <tr className="border-b border-slate-800"><td className="py-2 pr-4">3-4</td><td className="pr-4">29, 32</td><td className="pr-4 font-medium">More skill depth</td><td className="text-slate-500">Avoid consensus #1 WR/RB trap players</td></tr>
               <tr className="border-b border-slate-800 bg-green-500/5"><td className="py-2 pr-4 text-green-400 font-bold">5-6</td><td className="pr-4">49, 52</td><td className="pr-4 font-bold text-green-400">⭐ ELITE KICKER (K1)</td><td className="text-green-400/70">THE winning edge — every champion did this</td></tr>
               <tr className="border-b border-slate-800 bg-blue-500/5"><td className="py-2 pr-4 text-blue-400 font-bold">7-9</td><td className="pr-4">69, 72, 89</td><td className="pr-4 font-bold text-blue-400">⭐ TOP QB STEAL</td><td className="text-blue-400/70">Goff rd 7+9, Prescott rd 11 — all won</td></tr>
@@ -129,7 +147,6 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* Recent News */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">📰 Recent News</h2>
@@ -137,7 +154,7 @@ export default async function Dashboard() {
         </div>
         {recentNews.length > 0 ? (
           <div className="space-y-3">
-            {recentNews.map((item: any) => (
+            {recentNews.map((item) => (
               <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-slate-800/50">
                 <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 shrink-0 mt-0.5">
                   {item.type}
@@ -149,6 +166,8 @@ export default async function Dashboard() {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <p className="text-slate-500 text-sm">Recent news is unavailable until Firebase Admin credentials are configured.</p>
         ) : (
           <p className="text-slate-500 text-sm">No news yet. Click &quot;Run News Update&quot; on the News page to get started.</p>
         )}

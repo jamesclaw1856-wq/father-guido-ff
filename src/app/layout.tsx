@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 import './globals.css';
-import { isAuthenticated } from '@/lib/auth';
-import { redirect } from 'next/navigation';
-import Sidebar from '@/components/Sidebar';
 
 const geist = Geist({ subsets: ['latin'] });
 

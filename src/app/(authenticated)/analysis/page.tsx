@@ -1,10 +1,45 @@
 import { getDb } from '@/lib/firebase-admin';
 
-async function getAnalysis() {
+type TopScorer = {
+  year: number;
+  rank: number;
+  player: string;
+  pos: string;
+  team: string;
+  pts: number;
+  preseasonRank: string;
+};
+
+type EliteKicker = {
+  name: string;
+  team: string;
+  y2023: number;
+  y2024: number;
+  y2025: number;
+  avg: number;
+  notes: string;
+};
+
+type AdpEntry = {
+  year: number;
+  player: string;
+  pos: string;
+  preseasonRank: string;
+  actualFinish: string;
+  category: 'TRAP' | 'STEAL';
+};
+
+type AnalysisData = {
+  topScorers?: TopScorer[];
+  adpVsActual?: AdpEntry[];
+  eliteKickers?: EliteKicker[];
+};
+
+async function getAnalysis(): Promise<AnalysisData | null> {
   try {
     const db = getDb();
     const doc = await db.collection('analysis').doc('multiYear').get();
-    return doc.exists ? doc.data() : null;
+    return doc.exists ? (doc.data() as AnalysisData) : null;
   } catch {
     return null;
   }
@@ -15,7 +50,6 @@ export default async function AnalysisPage() {
   const topScorers = data?.topScorers || [];
   const adpVsActual = data?.adpVsActual || [];
   const eliteKickers = data?.eliteKickers || [];
-  const eliteQBs = data?.eliteQBs || [];
 
   return (
     <div className="space-y-8">
@@ -24,7 +58,6 @@ export default async function AnalysisPage() {
         <p className="text-slate-400 mt-1">2023-2025 preseason rankings vs actual performance</p>
       </div>
 
-      {/* Preseason #1 Hit Rate */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">Preseason #1 Pick Hit Rate (3 Years)</h2>
         <div className="grid grid-cols-4 gap-4">
@@ -33,13 +66,11 @@ export default async function AnalysisPage() {
             { pos: 'WR', rate: '0%', hits: '0/3', color: 'red', detail: 'Chase 2x busted, Lamb busted' },
             { pos: 'QB', rate: '33%', hits: '1/3', color: 'yellow', detail: 'Only Burrow (2024) delivered' },
             { pos: 'K', rate: '33%', hits: '1/3', color: 'yellow', detail: 'Aubrey (2024) delivered' },
-          ].map(item => (
-            <div key={item.pos} className={`rounded-xl p-4 border ${
-              item.color === 'red' ? 'bg-red-500/10 border-red-500/30' : 'bg-yellow-500/10 border-yellow-500/30'
-            }`}>
+          ].map((item) => (
+            <div key={item.pos} className={`rounded-xl p-4 border ${item.color === 'red' ? 'bg-red-500/10 border-red-500/30' : 'bg-yellow-500/10 border-yellow-500/30'}`}>
               <div className="text-2xl font-bold text-white">{item.rate}</div>
               <div className={`text-sm font-medium ${item.color === 'red' ? 'text-red-400' : 'text-yellow-400'}`}>
-                {item.pos} #{' '}1 → {item.hits}
+                {item.pos} #1 → {item.hits}
               </div>
               <div className="text-xs text-slate-500 mt-1">{item.detail}</div>
             </div>
@@ -52,7 +83,6 @@ export default async function AnalysisPage() {
         </div>
       </div>
 
-      {/* Top Scorers Table */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">Top 20 Overall Scorers by Year</h2>
         {topScorers.length > 0 ? (
@@ -70,18 +100,13 @@ export default async function AnalysisPage() {
                 </tr>
               </thead>
               <tbody>
-                {topScorers.map((s: any, i: number) => (
-                  <tr key={i} className="border-b border-slate-800">
+                {topScorers.map((s, i) => (
+                  <tr key={`${s.player}-${s.year}-${i}`} className="border-b border-slate-800">
                     <td className="py-2 pr-3 text-slate-400">{s.year}</td>
                     <td className="py-2 pr-3 font-medium">{s.rank}</td>
                     <td className="py-2 pr-3 text-white font-medium">{s.player}</td>
                     <td className="py-2 pr-3">
-                      <span className={`px-2 py-0.5 rounded text-xs ${
-                        s.pos === 'K' ? 'bg-yellow-500/20 text-yellow-400' :
-                        s.pos === 'QB' ? 'bg-blue-500/20 text-blue-400' :
-                        s.pos === 'RB' ? 'bg-green-500/20 text-green-400' :
-                        'bg-purple-500/20 text-purple-400'
-                      }`}>{s.pos}</span>
+                      <span className={`px-2 py-0.5 rounded text-xs ${s.pos === 'K' ? 'bg-yellow-500/20 text-yellow-400' : s.pos === 'QB' ? 'bg-blue-500/20 text-blue-400' : s.pos === 'RB' ? 'bg-green-500/20 text-green-400' : 'bg-purple-500/20 text-purple-400'}`}>{s.pos}</span>
                     </td>
                     <td className="py-2 pr-3 text-slate-400">{s.team}</td>
                     <td className="py-2 pr-3 font-bold text-white">{s.pts}</td>
@@ -96,7 +121,6 @@ export default async function AnalysisPage() {
         )}
       </div>
 
-      {/* Elite Kicker Club */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">Elite Kicker Club (3-Year Performance)</h2>
         {eliteKickers.length > 0 ? (
@@ -114,8 +138,8 @@ export default async function AnalysisPage() {
                 </tr>
               </thead>
               <tbody>
-                {eliteKickers.map((k: any, i: number) => (
-                  <tr key={i} className="border-b border-slate-800">
+                {eliteKickers.map((k, i) => (
+                  <tr key={`${k.name}-${i}`} className="border-b border-slate-800">
                     <td className="py-2 pr-4 text-white font-medium">{k.name}</td>
                     <td className="py-2 pr-4 text-slate-400">{k.team}</td>
                     <td className="py-2 pr-4">{k.y2023 || '—'}</td>
@@ -133,7 +157,6 @@ export default async function AnalysisPage() {
         )}
       </div>
 
-      {/* ADP vs Actual */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">ADP Traps vs Steals (3 Years)</h2>
         {adpVsActual.length > 0 ? (
@@ -141,8 +164,8 @@ export default async function AnalysisPage() {
             <div>
               <h3 className="text-red-400 font-medium mb-3">🚫 ADP Trap Players (Consistently Overvalued)</h3>
               <div className="space-y-2">
-                {adpVsActual.filter((a: any) => a.category === 'TRAP').slice(0, 10).map((a: any, i: number) => (
-                  <div key={i} className="flex items-center justify-between p-2 rounded bg-red-500/5 border border-red-500/10">
+                {adpVsActual.filter((a) => a.category === 'TRAP').slice(0, 10).map((a, i) => (
+                  <div key={`${a.player}-${a.year}-${i}`} className="flex items-center justify-between p-2 rounded bg-red-500/5 border border-red-500/10">
                     <div>
                       <span className="text-white text-sm font-medium">{a.player}</span>
                       <span className="text-slate-500 text-xs ml-2">{a.pos} ({a.year})</span>
@@ -158,8 +181,8 @@ export default async function AnalysisPage() {
             <div>
               <h3 className="text-green-400 font-medium mb-3">⭐ Steal Picks (Consistently Undervalued)</h3>
               <div className="space-y-2">
-                {adpVsActual.filter((a: any) => a.category === 'STEAL').slice(0, 10).map((a: any, i: number) => (
-                  <div key={i} className="flex items-center justify-between p-2 rounded bg-green-500/5 border border-green-500/10">
+                {adpVsActual.filter((a) => a.category === 'STEAL').slice(0, 10).map((a, i) => (
+                  <div key={`${a.player}-${a.year}-${i}`} className="flex items-center justify-between p-2 rounded bg-green-500/5 border border-green-500/10">
                     <div>
                       <span className="text-white text-sm font-medium">{a.player}</span>
                       <span className="text-slate-500 text-xs ml-2">{a.pos} ({a.year})</span>
@@ -178,7 +201,6 @@ export default async function AnalysisPage() {
         )}
       </div>
 
-      {/* Father Guido Tendencies */}
       <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-xl p-6">
         <h2 className="text-lg font-semibold mb-4">Father Guido Draft Tendencies (3-Year Pattern)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
