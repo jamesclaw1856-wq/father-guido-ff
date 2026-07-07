@@ -1,2 +1,2 @@
-:HL["/father-guido-ff/_next/static/chunks/049ac_.bhi8ql.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(authenticated)","param":null,"prefetchHints":0,"slots":{"children":{"name":"teams","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"eUlTJiES4xAj_JeZqs6SB"}
+:HL["/father-guido-ff/_next/static/chunks/0fg3ndl4k3.y5.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(authenticated)","param":null,"prefetchHints":0,"slots":{"children":{"name":"teams","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"DojemnpiDJNwxb1QbYsyg"}
