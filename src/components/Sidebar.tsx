@@ -9,6 +9,7 @@ const navItems = [
   { href: '/players', label: 'Player Database', icon: '🏃' },
   { href: '/analysis', label: '3-Year Analysis', icon: '🔬' },
   { href: '/draft', label: 'Draft Board', icon: '🎯' },
+  { href: '/draft-history', label: 'Draft History', icon: '📋' },
   { href: '/teams', label: 'NFL Teams', icon: '🏟️' },
 ];
 

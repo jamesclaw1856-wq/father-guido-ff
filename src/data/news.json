@@ -1,5 +1,340 @@
 [
   {
+    "id": "news-20260416-001",
+    "date": "2026-04-16",
+    "type": "5th-Year Option",
+    "headline": "Texans exercise C.J. Stroud 5th-year option ($25.9M for 2027)",
+    "player": "C.J. Stroud",
+    "fromTeam": "",
+    "toTeam": "HOU",
+    "details": "Houston exercises $25.9M 5th-year option for QB Stroud and $21.51M for DE Will Anderson. Stroud locked in through 2027.",
+    "source": "NFL.com",
+    "sourceUrl": "https://www.nfl.com/transactions/",
+    "ripples": [
+      {
+        "player": "Stefon Diggs",
+        "team": "HOU",
+        "position": "WR",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Stroud locked in long-term → HOU offense has stability → weapons retain value",
+        "impact": "Diggs' target share secure with Stroud confirmed",
+        "draftValueShift": "Holds steady rd 8-10",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Ka'imi Fairbairn",
+        "team": "HOU",
+        "position": "K",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Stroud option → HOU investing in offensive stability → offense stays elite → more FG/PAT ops",
+        "impact": "Fairbairn continues as top-5 kicker candidate",
+        "draftValueShift": "Remains rd 5-7 K target",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-002",
+    "date": "2026-04-16",
+    "type": "5th-Year Option",
+    "headline": "Falcons exercise Bijan Robinson 5th-year option ($11.3M)",
+    "player": "Bijan Robinson",
+    "fromTeam": "",
+    "toTeam": "ATL",
+    "details": "Atlanta exercises Robinson's 5th-year option worth $11.323M. Coming off historic rushing season. Locked in through 2027.",
+    "source": "NFL.com",
+    "sourceUrl": "https://www.nfl.com/transactions/",
+    "ripples": [
+      {
+        "player": "Bijan Robinson",
+        "team": "ATL",
+        "position": "RB",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "5th-year option exercised → ATL committed to Robinson as bell cow → no committee threat",
+        "impact": "Volume locked in, no reason to reduce touches with this investment",
+        "draftValueShift": "Solidifies as rd 1-2 RB",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Tua Tagovailoa",
+        "team": "ATL",
+        "position": "QB",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Robinson option → ATL investing in offense around Tua → run game takes pressure off Tua",
+        "impact": "Tua benefits from elite RB creating play-action opportunities",
+        "draftValueShift": "Late-round QB2 flier",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-003",
+    "date": "2026-04-16",
+    "type": "Signing",
+    "headline": "Tua Tagovailoa → ATL Falcons (1-yr, vet minimum)",
+    "player": "Tua Tagovailoa",
+    "fromTeam": "MIA",
+    "toTeam": "ATL",
+    "details": "Dolphins released Tua (absorbing $99M dead cap). Falcons signed him to compete with Michael Penix Jr. All-left-handed QB room. Weapons: Drake London, Bijan Robinson, Kyle Pitts.",
+    "source": "ESPN",
+    "sourceUrl": "https://www.espn.com/nfl/story/_/id/48186515/veteran-mike-evans-gets-second-wind-signing-49ers",
+    "ripples": [
+      {
+        "player": "Drake London",
+        "team": "ATL",
+        "position": "WR",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Tua joins ATL → proven accurate passer upgrades from Penix → London gets better QB play",
+        "impact": "London's target volume and efficiency should improve with Tua's accuracy",
+        "draftValueShift": "Rises from rd 6-8 to rd 4-6",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Kyle Pitts",
+        "team": "ATL",
+        "position": "WR",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Tua joins ATL → Tua historically targets TEs heavily (used Jonnu Smith in MIA) → Pitts upside returns",
+        "impact": "Pitts re-emerges as a fantasy-relevant TE/WR option",
+        "draftValueShift": "Returns to rd 10-12 range",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Michael Penix Jr",
+        "team": "ATL",
+        "position": "QB",
+        "direction": "down",
+        "severity": "high",
+        "cause": "Tua joins ATL → Penix faces real competition → may lose starting job",
+        "impact": "If Penix loses the job, he becomes undraftable",
+        "draftValueShift": "Wait until camp winner is named",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Malik Willis",
+        "team": "MIA",
+        "position": "QB",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Tua released → MIA signed Willis (3yr/$67.5M) → Willis is the clear starter with rushing upside",
+        "impact": "Willis' rushing ability adds dual-threat value in distance-tiered TD scoring",
+        "draftValueShift": "Monitor as late-round QB2 with upside",
+        "affectedSide": "from"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-004",
+    "date": "2026-04-16",
+    "type": "Signing",
+    "headline": "Kenneth Walker III → KC Chiefs (3yr/$45M)",
+    "player": "Kenneth Walker III",
+    "fromTeam": "SEA",
+    "toTeam": "KC",
+    "details": "Super Bowl LX MVP leaves Seattle. Chiefs sign Walker ($28.7M guaranteed) to pair with Mahomes. Massive upgrade at RB for KC.",
+    "source": "NFL.com",
+    "sourceUrl": "https://www.nfl.com/news/chiefs-signing-ex-seahawks-rb-kenneth-walker-iii-mvp-of-super-bowl-lx",
+    "ripples": [
+      {
+        "player": "Kenneth Walker III",
+        "team": "KC",
+        "position": "RB",
+        "direction": "up",
+        "severity": "high",
+        "cause": "Walker joins KC → Mahomes creates running lanes → defenses can't stack the box → elite game scripts",
+        "impact": "Top-3 fantasy RB ceiling with Mahomes creating positive game scripts",
+        "draftValueShift": "Rises to rd 1-2 RB territory",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Patrick Mahomes",
+        "team": "KC",
+        "position": "QB",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Walker joins KC → elite RB improves play-action → Mahomes efficiency rises",
+        "impact": "Play-action boost increases deep TD potential (huge in distance-tiered scoring)",
+        "draftValueShift": "Holds in rd 3-5 QB range",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Travis Kelce",
+        "team": "KC",
+        "position": "WR",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Walker joins KC → run game opens middle of field → Kelce benefits from lighter boxes",
+        "impact": "Kelce (year 14) gets easier coverage matchups",
+        "draftValueShift": "Late-round value if he stays healthy",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-005",
+    "date": "2026-04-16",
+    "type": "Trade",
+    "headline": "Michael Pittman Jr → PIT Steelers (from IND Colts)",
+    "player": "Michael Pittman Jr",
+    "fromTeam": "IND",
+    "toTeam": "PIT",
+    "details": "Steelers trade 6th-rounder for Pittman + 7th. Signed 3yr/$59M extension. Slots in as WR2 behind DK Metcalf.",
+    "source": "Yahoo Sports",
+    "sourceUrl": "",
+    "ripples": [
+      {
+        "player": "Michael Pittman Jr",
+        "team": "PIT",
+        "position": "WR",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Pittman joins PIT → solid WR2 behind Metcalf → Steelers invested $59M → locked into role",
+        "impact": "Reliable target share in a run-first offense, but ceiling limited",
+        "draftValueShift": "Mid-round WR value rd 8-10",
+        "affectedSide": "to"
+      },
+      {
+        "player": "DK Metcalf",
+        "team": "PIT",
+        "position": "WR",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Pittman joins PIT → draws CB2 attention → Metcalf faces fewer double teams",
+        "impact": "Metcalf benefits from a real WR2 taking pressure off",
+        "draftValueShift": "Holds steady rd 5-7",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-006",
+    "date": "2026-04-16",
+    "type": "Signing",
+    "headline": "Mike Evans → SF 49ers (3yr/$60.4M)",
+    "player": "Mike Evans",
+    "fromTeam": "TB",
+    "toTeam": "SF",
+    "details": "12-year Buccaneers legend leaves Tampa. Evans joins 49ers with Deebo Samuel, Aiyuk departed. Year 13 for Evans.",
+    "source": "NFL.com",
+    "sourceUrl": "https://www.nfl.com/news/mike-evans-to-sign-with-49ers-ending-12-year-tenure-with-buccaneers",
+    "ripples": [
+      {
+        "player": "Mike Evans",
+        "team": "SF",
+        "position": "WR",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Evans joins SF → big-bodied WR in Shanahan system → red zone monster with better run game around him",
+        "impact": "Evans' TD upside remains elite even at age 33 (key for distance-tiered TDs)",
+        "draftValueShift": "Value pick rd 7-9",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Deebo Samuel",
+        "team": "SF",
+        "position": "WR",
+        "direction": "down",
+        "severity": "medium",
+        "cause": "Evans joins SF → target competition increases → Deebo's already declining touch count shrinks further",
+        "impact": "Deebo's WR value drops with Evans as the primary outside receiver",
+        "draftValueShift": "Drops from rd 6-8 to rd 9-11",
+        "affectedSide": "to"
+      },
+      {
+        "player": "Bucky Irving",
+        "team": "TB",
+        "position": "RB",
+        "direction": "down",
+        "severity": "medium",
+        "cause": "Evans leaves TB → Bucs lose their best red zone weapon → offense degrades → fewer scoring opportunities",
+        "impact": "Irving loses TD equity near the goal line without Evans drawing coverage",
+        "draftValueShift": "Slight drop, monitor Bucs offense",
+        "affectedSide": "from"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-007",
+    "date": "2026-04-16",
+    "type": "Signing",
+    "headline": "Rico Dowdle → PIT Steelers (2yr/$12.25M)",
+    "player": "Rico Dowdle",
+    "fromTeam": "DAL",
+    "toTeam": "PIT",
+    "details": "Back-to-back 1,000-yard rusher leaves Dallas. Steelers sign him as potential lead back alongside Najee Harris.",
+    "source": "CBS Sports",
+    "sourceUrl": "",
+    "ripples": [
+      {
+        "player": "Najee Harris",
+        "team": "PIT",
+        "position": "RB",
+        "direction": "down",
+        "severity": "high",
+        "cause": "Dowdle joins PIT → PIT invested $12M in him → Harris faces committee or reduced role",
+        "impact": "Harris likely loses bell-cow status, becomes TD-dependent",
+        "draftValueShift": "Drops from rd 5-7 to rd 9-11",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-008",
+    "date": "2026-04-16",
+    "type": "Signing",
+    "headline": "Kirk Cousins → LV Raiders (1yr/$20M + option)",
+    "player": "Kirk Cousins",
+    "fromTeam": "ATL",
+    "toTeam": "LV",
+    "details": "Cousins signs with Raiders as veteran backup/bridge behind expected #1 pick Fernando Mendoza. Option for 2yrs/$80M in 2027-28.",
+    "source": "NFL.com",
+    "sourceUrl": "",
+    "ripples": [
+      {
+        "player": "Fernando Mendoza",
+        "team": "LV",
+        "position": "QB",
+        "direction": "up",
+        "severity": "low",
+        "cause": "Cousins as backup → Mendoza has experienced mentor but no real competition → clear path to start",
+        "impact": "Mendoza can develop without pressure; Cousins insurance if he struggles",
+        "draftValueShift": "Mendoza stays late-round flier",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
+    "id": "news-20260416-009",
+    "date": "2026-04-16",
+    "type": "5th-Year Option",
+    "headline": "Seahawks exercise Jaxon Smith-Njigba 5th-year option + extension",
+    "player": "Jaxon Smith-Njigba",
+    "fromTeam": "",
+    "toTeam": "SEA",
+    "details": "Seahawks picked up JSN's option and agreed to a record-breaking extension. Also exercised Devon Witherspoon's option. SEA investing heavily.",
+    "source": "ESPN",
+    "sourceUrl": "https://www.espn.com/nfl/story/_/id/48358999/fifth-year-option-tracker-nfl-players-2023-first-round-draft-class",
+    "ripples": [
+      {
+        "player": "Jaxon Smith-Njigba",
+        "team": "SEA",
+        "position": "WR",
+        "direction": "up",
+        "severity": "medium",
+        "cause": "Record extension → SEA committed long-term → JSN is THE guy in Seattle with Walker gone",
+        "impact": "Target volume should increase with Walker's departure creating more passing situations",
+        "draftValueShift": "Rises to rd 5-7 WR",
+        "affectedSide": "to"
+      }
+    ]
+  },
+  {
     "id": "pjdJZkJWYfqkLANzo9tr",
     "date": "2026-04-15",
     "type": "Trade Talks",
