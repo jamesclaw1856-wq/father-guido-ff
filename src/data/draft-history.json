@@ -1,0 +1,41 @@
+{
+  "2025": {
+    "draftSlot": 5,
+    "format": "10 teams, 18 rounds, snake",
+    "overallGrade": "C",
+    "overallNotes": "Great late-round value couldn't overcome the Round 1 Chase bust. If Chase had delivered ~280-300 pts, Father Guido likely finishes 3rd.",
+    "picks": [
+      { "round": 1, "pick": 5, "overall": 5, "player": "Ja'Marr Chase", "position": "WR", "nflTeam": "CIN", "points": 160, "result": "bust", "notes": "Major bust — expected 300+" },
+      { "round": 2, "pick": 16, "overall": 16, "player": "James Cook", "position": "RB", "nflTeam": "BUF", "points": 305, "result": "hit", "notes": "Solid RB1" },
+      { "round": 3, "pick": 25, "overall": 25, "player": "Terry McLaurin", "position": "WR", "nflTeam": "WAS", "points": 40, "result": "bust", "notes": "Dropped (injury/performance)" },
+      { "round": 4, "pick": 36, "overall": 36, "player": "Isiah Pacheco", "position": "RB", "nflTeam": "KC", "points": 20, "result": "bust", "notes": "Dropped early" },
+      { "round": 5, "pick": 45, "overall": 45, "player": "Courtland Sutton", "position": "WR", "nflTeam": "DEN", "points": 118, "result": "meh", "notes": "Underperformed" },
+      { "round": 6, "pick": 56, "overall": 56, "player": "Nick Chubb", "position": "RB", "nflTeam": "HOU (UFA)", "points": null, "result": "bust", "notes": "Cut" },
+      { "round": 7, "pick": 65, "overall": 65, "player": "Ollie Gordon", "position": "RB", "nflTeam": "MIA", "points": null, "result": "bust", "notes": "Cut" },
+      { "round": 8, "pick": 76, "overall": 76, "player": "Browns", "position": "Team", "nflTeam": "CLE", "points": 160, "result": "meh", "notes": "Below average team pick" },
+      { "round": 9, "pick": 85, "overall": 85, "player": "Javonte Williams", "position": "RB", "nflTeam": "DAL", "points": 160, "result": "hit", "notes": "Surprise contributor" },
+      { "round": 10, "pick": 96, "overall": 96, "player": "Brock Purdy", "position": "QB", "nflTeam": "SF", "points": null, "result": "bust", "notes": "Demoted to taxi" },
+      { "round": 11, "pick": 105, "overall": 105, "player": "B. Allen", "position": "", "nflTeam": "", "points": null, "result": "bust", "notes": "Cut" },
+      { "round": 12, "pick": 116, "overall": 116, "player": "Trevor Lawrence", "position": "QB", "nflTeam": "JAC", "points": 378, "result": "hit", "notes": "Primary QB — delivered" },
+      { "round": 13, "pick": 125, "overall": 125, "player": "Rashod Bateman", "position": "WR", "nflTeam": "BAL", "points": null, "result": "bust", "notes": "Cut" },
+      { "round": 14, "pick": 136, "overall": 136, "player": "Travis Hunter", "position": "WR", "nflTeam": "JAC", "points": null, "result": "bust", "notes": "Cut (injury)" },
+      { "round": 15, "pick": 145, "overall": 145, "player": "Trey McBride", "position": "TE/WR", "nflTeam": "ARI", "points": 145, "result": "meh", "notes": "Held" },
+      { "round": 16, "pick": 156, "overall": 156, "player": "Will Reichard", "position": "K", "nflTeam": "MIN", "points": 408, "result": "hit", "notes": "STEAL — drafted late, finished #8 overall" },
+      { "round": 17, "pick": 165, "overall": 165, "player": "Brandon McManus", "position": "K", "nflTeam": "GB", "points": 258, "result": "meh", "notes": "Serviceable" },
+      { "round": 18, "pick": 176, "overall": 176, "player": "Commanders", "position": "Team", "nflTeam": "WAS", "points": 223, "result": "hit", "notes": "Strong pick" }
+    ],
+    "grades": [
+      { "category": "Round 1 (Chase)", "grade": "D", "notes": "#1 WR preseason bust. Cost ~140 pts vs expectation. Biggest single factor in missing a top-3 finish." },
+      { "category": "Rounds 2-5 (Cook, McLaurin, Pacheco, Sutton)", "grade": "C+", "notes": "Cook delivered; others disappointed or got dropped." },
+      { "category": "Rounds 6-11 (depth picks)", "grade": "D", "notes": "5 of 6 picks were dropped during the season. Too much boom-or-bust at mid rounds." },
+      { "category": "Rounds 12-18 (late value)", "grade": "A-", "notes": "Lawrence (378), Reichard (408), Commanders (223) were all excellent value picks late." }
+    ],
+    "keyTakeaways": [
+      "Round 1 WR risk is real: Chase was the consensus #1 WR and the biggest bust. Consider opening with RB or elite QB.",
+      "Late-round kickers can be elite: Reichard was picked 16th round and finished as the 8th highest scoring player in the entire league.",
+      "QB depth over QB elite: Trevor Lawrence in round 12 outscored several Round 1-3 picks. Wait on QB until round 10+.",
+      "Avoid rookie RB lottery tickets at mid-round: Gordon, Chubb (aged out), B. Allen were all swing-and-miss.",
+      "The top kickers scored more than most QBs: Aubrey (493), Myers (504), Fairbairn (474) all scored higher than most starting QBs."
+    ]
+  }
+}
