@@ -11,6 +11,9 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [fetchFailed, setFetchFailed] = useState(false);
+  // Raw feed scrapes with no ripple analysis are hidden by default — they
+  // outnumber the analysed items and bury them otherwise.
+  const [showHeadlineOnly, setShowHeadlineOnly] = useState(false);
 
   const loadFromFirestore = useCallback(async () => {
     setLoading(true);
@@ -36,7 +39,11 @@ export default function NewsPage() {
     loadFromFirestore();
   }, [loadFromFirestore]);
 
-  const grouped = news.reduce((acc: Record<string, NewsItem[]>, item) => {
+  const rippleCount = (item: NewsItem) => (Array.isArray(item.ripples) ? item.ripples.length : 0);
+  const headlineOnlyCount = news.filter(i => rippleCount(i) === 0).length;
+  const visibleNews = showHeadlineOnly ? news : news.filter(i => rippleCount(i) > 0);
+
+  const grouped = visibleNews.reduce((acc: Record<string, NewsItem[]>, item) => {
     const date = item.date || 'Unknown';
     if (!acc[date]) acc[date] = [];
     acc[date].push(item);
@@ -104,7 +111,25 @@ export default function NewsPage() {
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-blue-500"></span> To Team</span>
         <span className="text-gray-300">|</span>
         <span>Click any item to expand</span>
+        {headlineOnlyCount > 0 && (
+          <label className="ml-auto flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={showHeadlineOnly}
+              onChange={(e) => setShowHeadlineOnly(e.target.checked)}
+              className="accent-blue-600"
+            />
+            <span>Show {headlineOnlyCount} headline-only items</span>
+          </label>
+        )}
       </div>
+
+      {sortedDates.length === 0 && (
+        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-500 text-sm">
+          No news items with ripple analysis to show.
+          {headlineOnlyCount > 0 && ' Tick the box above to see headline-only items.'}
+        </div>
+      )}
 
       {sortedDates.map(date => (
         <div key={date}>
@@ -113,7 +138,7 @@ export default function NewsPage() {
             {formatDate(date)} <span className="text-gray-300">({grouped[date].length} items)</span>
           </h2>
           <div className="space-y-3">
-            {grouped[date].map((item) => <RippleTree key={item.id} item={item} />)}
+            {grouped[date].map((item, i) => <RippleTree key={item.id ?? `${date}-${i}`} item={item} />)}
           </div>
         </div>
       ))}

@@ -7,7 +7,10 @@ export interface Ripple {
   cause: string;
   impact: string;
   draftValueShift: string;
-  affectedSide: 'from' | 'to';
+  // Optional on purpose: live Firestore docs exist without it. RippleTree shows
+  // these under "Other impacts" rather than silently dropping them, so typing it
+  // as required would be a lie that hides real data.
+  affectedSide?: 'from' | 'to';
 }
 
 export interface NewsItem {
@@ -20,8 +23,10 @@ export interface NewsItem {
   toTeam: string;
   details: string;
   source: string;
-  sourceUrl: string;
-  ripples: Ripple[];
+  // Nice to have, not load-bearing: shown as a link on the source line when
+  // present. Items without one render normally.
+  sourceUrl?: string;
+  ripples?: Ripple[];
 }
 
 export interface PlayerData {
